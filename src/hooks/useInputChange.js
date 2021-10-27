@@ -1,10 +1,10 @@
-import { useState } from "React";
+import { useState } from "react";
 
 export default function useInputChange(defaultObj) {
-  let [obj, setObj] = useState(defaultObj);
+  let [obj, setObj] = useState(defaultObj || {});
   function onUpdate(event) {
     obj[event.target.id] = event.target.value || event.target.checked;
-    setObj({...userObj});
+    setObj({...obj});
   }
   return [obj, onUpdate];
 }

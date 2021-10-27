@@ -9,14 +9,14 @@ import {
 } from "react-router-dom";
 // custom components
 import Header from "Header";
-import Create from "routes/Create"
+import Create from "routes/Create";
 
 export default function App() {
   return (
     <Router>
       <div>
 	<Header />
-	<Container>
+	<Container fluid="lg" className="pt-3" id="root-container">
 	  <Switch>
 	    <Route path="/quizzes">
 	      <h1>Quizzes</h1>
