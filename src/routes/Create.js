@@ -127,7 +127,7 @@ export default function Create(props) {
                         </Form.Group>
                         <Form.Group className="col-6 col-lg-1 pb-2">
                           <Form.Label>X Axis:</Form.Label>
-                          <Form.Control type="number" value={o.xValue > 0 ? `${o.yValue}` : o.yValue} onChange={event => {
+                          <Form.Control type="number" value={o.yValue > 0 ? `+${o.yValue}` : o.yValue} onChange={event => {
                             const pos = questions.findIndex(e => e === q);
                             const pos2 = questions[pos].options.findIndex(e => e === o);
                             const v = event.target.value;
