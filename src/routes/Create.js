@@ -69,12 +69,12 @@ export default function Create(props) {
 	</Col>
       </Row>
       <Row className="pt-3">
-        <Col><b>Let's set up some questions</b></Col>
+        <Col><b>Let's set up some questions:</b></Col>
       </Row>
       <Row>
         <Col>
           <Card submit={addQuestion} submitLabel="Add question...">
-            <Container fluid>
+            <Container>
               {questions.map(q =>
                 <React.Fragment key={`question-${q.id}`}>
                   <Row className="pb-2">
@@ -100,8 +100,8 @@ export default function Create(props) {
                   </Row>
                   {q.options.map(o =>
                     <Form key={`${q.id}-${o.id}`}>
-                      <Row className="pb-2">
-                        <Form.Group className="col-lg-10">
+                      <Row>
+                        <Form.Group className="col-lg-10 pb-2">
                           <Form.Label>Answer {o.id + 1}:</Form.Label>
                           <Form.Control type="text" value={o.text} onChange={event => {
                             const pos = questions.findIndex(e => e === q);
@@ -111,7 +111,7 @@ export default function Create(props) {
                           }} />
                         </Form.Group>
 
-                        <Form.Group className="col-lg-1">
+                        <Form.Group className="col-6 col-lg-1 pb-2">
                           <Form.Label>X Axis:</Form.Label>
                           <Form.Control type="number" value={o.xValue > 0 ? `+${o.xValue}` : o.xValue} onChange={event => {
                             const pos = questions.findIndex(e => e === q);
@@ -125,7 +125,7 @@ export default function Create(props) {
                             setQuestions([...questions]);
                           }} />
                         </Form.Group>
-                        <Form.Group className="col-lg-1">
+                        <Form.Group className="col-6 col-lg-1 pb-2">
                           <Form.Label>X Axis:</Form.Label>
                           <Form.Control type="number" value={o.xValue > 0 ? `${o.yValue}` : o.yValue} onChange={event => {
                             const pos = questions.findIndex(e => e === q);

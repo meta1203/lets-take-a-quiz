@@ -70,7 +70,7 @@ export default function Graph(props) {
                   xPercent={0.96}
                   style={{transform: "rotate(90)", ...labelStyle}} />
       <ChartLabel text={props.leftTitle}
-                  yPercent={0.5 - (props.rightTitle.length * 0.006)}
+                  yPercent={0.5 - (props.leftTitle.length * 0.006)}
                   xPercent={0.04}
                   style={{transform: "rotate(-90)", ...labelStyle}} />
     </XYPlot>
