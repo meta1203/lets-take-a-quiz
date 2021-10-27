@@ -16,8 +16,10 @@ export default function Create(props) {
       <Row>
 	<Col> 
 	  <Graph leftTitle="I dunno" rightTitle="Dumb shit"
+                 bottomTitle="That's pretty fun."
 		 topTitle="This is the story of a girl"
-		 x={25} y={40} />
+		 x={25} y={40}
+                 width={600} height={600} />
 	</Col>
       </Row>
     </>
