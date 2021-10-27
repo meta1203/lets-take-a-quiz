@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "es6",
+    "target": "es6",
+    "checkJs": true,
+    "jsx": "react",
+    "lib": ["dom", "es6"],
+    "baseUrl": "src"
+  },
+  "include": ["src"]
+}

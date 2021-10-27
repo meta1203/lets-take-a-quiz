@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Container from 'react-bootstrap/Container';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+// custom components
+import Header from "Header";
+import Create from "routes/Create"
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+	<Header />
+	<Container>
+	  <Switch>
+	    <Route path="/quizzes">
+	      <h1>Quizzes</h1>
+	    </Route>
+	    <Route path="/create">
+	      <Create />
+	    </Route>
+	    <Route path="/">
+	      <h1>Home</h1>
+	      <br />
+	      <Link to="/quizzes">Go to quizzes</Link>
+	    </Route>
+	  </Switch>
+	</Container>
+      </div>
+    </Router>
   );
-}
-
-export default App;
+} 
