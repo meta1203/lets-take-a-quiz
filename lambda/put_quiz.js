@@ -1,6 +1,8 @@
 const AWS = require('aws-sdk');
 AWS.config.update({ region: process.env.AWS_REGION });
 const ddb = new AWS.DynamoDB.DocumentClient();
+const fs = require('fs');
+const {v4: uuidv4} = require('uuid');
 
 function getDTO(statusCode, message, data) {
   return {
@@ -26,7 +28,7 @@ exports.handler = async function(event, context) {
   if (!event.body) return getDTO(400, "Must have body");
   const quiz = JSON.parse(event.body);
   // perform data validation
-  if (!quiz || !quiz.questions || !quiz.questions.length || !quiz.topTitle
+  if (!quiz || !quiz.questions || !quiz.questions.length || !quiz.topTitle ||
       !quiz.bottomTitle || !quiz.leftTitle || !quiz.rightTitle) return getDTO(400, "invalid format");
   // validate all questions
   for (let q of quiz.questions) {
@@ -37,14 +39,26 @@ exports.handler = async function(event, context) {
       if (!a.text || !a.xValue || !a.yValue || !a.id) return getDTO(400, "invalid answer format");
     }
   }
-  // TODO: filter all text through anti-slur filter
-
-  // TODO: generate quiz id
-  quiz.id = "i'm an ID :)";
+  // filter all text through anti-slur filter
+  
+  // had to construct a custom file for this... that was not a comfortable experience
+  // I'm going to leave this out of the repo. don't want this stuff associated with
+  // my name, even if its to keep things civil.
+  let raw_slurs = fs.readFileSync('slur_list.txt', 'utf8');
+  raw_slurs = raw_slurs.replace(/(\n)/g, "");
+  console.log(raw_slurs);
+  const slurs = raw_slurs.toLowerCase().split(" ");
+  const lbody = event.body.toLowerCase();
+  for (const slur of slurs) {
+    if (lbody.includes(slur)) return getDTO(400, "lets keep it clean");
+  }
+  // generate quiz id
+  quiz.id = uuidv4();
+  // save it to db
   try {
     const qData = await createQuiz(quiz);
     return getDTO(200, "success", qData);
   } catch (e) {
     return getDTO(500, "server failure", e);
   }
-}
+};

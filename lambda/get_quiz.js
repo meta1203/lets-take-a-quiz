@@ -39,4 +39,4 @@ exports.handler = async function(event, context) {
   } catch (e) {
     return getDTO(500, "server failure", e);
   }
-}
+};
