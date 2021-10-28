@@ -18,12 +18,7 @@ export default function Create(props) {
   let [body, setBody] = useInputChange({});
   let [gWidth, setGWidth] = useState(0);
   let [questions, setQuestions] = useState([]);
-  useEffect(() => {
-    setGWidth(Math.round(document.getElementById("graph-container").clientWidth * 0.9667));
-    if (questions.length === 0) addQuestion();
-  }, [gWidth, questions]);
-
-  function addQuestion() {
+  const addQuestion = () => {
     questions.push({
       question: "Add your question here.",
       options: [
@@ -35,7 +30,14 @@ export default function Create(props) {
       id: ++ids,
     });
     setQuestions([...questions]);
-  }
+  };
+  
+  useEffect(() => {
+    setGWidth(Math.round(document.getElementById("graph-container").clientWidth * 0.9667));
+    if (questions.length === 0) addQuestion();
+  }, [gWidth, questions, addQuestion]);
+
+  
   
   return (
     <>
@@ -117,10 +119,10 @@ export default function Create(props) {
                             const pos = questions.findIndex(e => e === q);
                             const pos2 = questions[pos].options.findIndex(e => e === o);
                             const v = event.target.value;
-                            const vn = Number(event.target.value);
+                            let vn = Number(event.target.value);
                             if (v === "-") vn = -0;
                             else if (event.target.value === "+" || event.target.value === "" ) {}
-                            else if (vn != vn) return;
+			    else if (isNaN(vn)) return;
                             questions[pos].options[pos2].xValue = vn;
                             setQuestions([...questions]);
                           }} />
@@ -131,10 +133,10 @@ export default function Create(props) {
                             const pos = questions.findIndex(e => e === q);
                             const pos2 = questions[pos].options.findIndex(e => e === o);
                             const v = event.target.value;
-                            const vn = Number(event.target.value);
+                            let vn = Number(event.target.value);
                             if (v === "-") vn = -0;
                             else if (event.target.value === "+" || event.target.value === "" ) {}
-                            else if (vn != vn) return;
+			    else if (isNaN(vn)) return;
                             questions[pos].options[pos2].yValue = vn;
                             setQuestions([...questions]);
                           }} />
