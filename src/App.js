@@ -10,6 +10,7 @@ import {
 // custom components
 import Header from "Header";
 import Create from "routes/Create";
+import Quiz from "routes/Quiz";
 
 export default function App() {
   return (
@@ -18,8 +19,8 @@ export default function App() {
 	<Header />
 	<Container fluid="lg" className="pt-3" id="root-container">
 	  <Switch>
-	    <Route path="/quizzes">
-	      <h1>Quizzes</h1>
+	    <Route path="/quiz/:id">
+	      <Quiz/>
 	    </Route>
 	    <Route path="/create">
 	      <Create />

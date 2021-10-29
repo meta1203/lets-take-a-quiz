@@ -2,6 +2,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
+import { useHistory } from 'react-router';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -18,26 +19,42 @@ export default function Create(props) {
   let [body, setBody] = useInputChange({});
   let [gWidth, setGWidth] = useState(0);
   let [questions, setQuestions] = useState([]);
+  // functions
   const addQuestion = () => {
     questions.push({
       question: "Add your question here.",
       options: [
-        {text: "Option 1", xValue: 0, yValue: 0, id: 0},
-        {text: "Option 2", xValue: 0, yValue: 0, id: 1},
-        {text: "Option 3", xValue: 0, yValue: 0, id: 2},
-        {text: "Option 4", xValue: 0, yValue: 0, id: 3},
+        {text: "Option 1", xValue: 0, yValue: 0, id: 1},
+        {text: "Option 2", xValue: 0, yValue: 0, id: 2},
+        {text: "Option 3", xValue: 0, yValue: 0, id: 3},
+        {text: "Option 4", xValue: 0, yValue: 0, id: 4},
       ],
       id: ++ids,
     });
     setQuestions([...questions]);
   };
-  
+  const submitQuiz = () => {
+    fetch("https://api.meta1203.com/quiz", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({...body, questions})
+    }).then(resp => resp.json()).then(q => {
+      if (q.success) {
+        console.log(q.data.id);
+        history.push(`/quiz/${q.data.id}`);
+      } else {
+        alert(`FAILURE: ${q.message}`);
+      }
+    });
+  };
+  // define hooks
   useEffect(() => {
     setGWidth(Math.round(document.getElementById("graph-container").clientWidth * 0.9667));
     if (questions.length === 0) addQuestion();
   }, [gWidth, questions, addQuestion]);
-
-  
+  const history = useHistory();
   
   return (
     <>
@@ -151,6 +168,7 @@ export default function Create(props) {
           </Card>
         </Col>
       </Row>
+      <Row><Col><Button variant="success" onClick={submitQuiz}>All done? Click here!</Button></Col></Row>
     </>
   );
 }
