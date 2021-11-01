@@ -13,7 +13,7 @@ import Graph from "parts/Graph";
 import Card from "parts/Panel";
 import useInputChange from "hooks/useInputChange";
 
-var ids = 0;
+var ids = 1;
 
 export default function Create(props) {
   let [body, setBody] = useInputChange({});
@@ -121,7 +121,7 @@ export default function Create(props) {
                     <Form key={`${q.id}-${o.id}`}>
                       <Row>
                         <Form.Group className="col-lg-10 pb-2">
-                          <Form.Label>Answer {o.id + 1}:</Form.Label>
+                          <Form.Label>Answer {o.id}:</Form.Label>
                           <Form.Control type="text" value={o.text} onChange={event => {
                             const pos = questions.findIndex(e => e === q);
                             const pos2 = questions[pos].options.findIndex(e => e === o);
@@ -145,7 +145,7 @@ export default function Create(props) {
                           }} />
                         </Form.Group>
                         <Form.Group className="col-6 col-lg-1 pb-2">
-                          <Form.Label>X Axis:</Form.Label>
+                          <Form.Label>Y Axis:</Form.Label>
                           <Form.Control type="number" value={o.yValue > 0 ? `+${o.yValue}` : o.yValue} onChange={event => {
                             const pos = questions.findIndex(e => e === q);
                             const pos2 = questions[pos].options.findIndex(e => e === o);

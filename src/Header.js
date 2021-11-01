@@ -14,7 +14,7 @@ export default function Header(props) {
       </Nav.Item>
       {loc.pathname.includes("/quiz") ?
       <Nav.Item>
-        <Nav.Link href="/quizzes" to="/quizzes" active as={Link}>Quizzes</Nav.Link>
+        <Nav.Link href="/quizzes" to="/" active as={Link}>Quizzes</Nav.Link>
      </Nav.Item>
      : undefined}
     </Nav>

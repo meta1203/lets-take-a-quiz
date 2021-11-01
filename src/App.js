@@ -28,7 +28,7 @@ export default function App() {
 	    <Route path="/">
 	      <h1>Home</h1>
 	      <br />
-	      <Link to="/quizzes">Go to quizzes</Link>
+	      <Link to="/create">Start by creating a quiz!</Link>
 	    </Route>
 	  </Switch>
 	</Container>
