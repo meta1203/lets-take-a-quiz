@@ -59,7 +59,9 @@ export default function Quiz(props) {
   if (!id) return (<h2>Oops, looks like you're in the wrong spot. Why not try again?</h2>);
   if (!quizData) return (<h2>Loading, please wait...</h2>);
   if (done.is) {
-    const size = Math.round(document.getElementById("root-container").clientWidth * 0.90);
+    const width = Math.round(document.getElementById("root-container").clientWidth * 0.85);
+    const height = Math.round(document.getElementById("root-container").clientHeight * 0.85);
+    const size = width > height ? height : width;
     return (
       <Row>
         <Col>
