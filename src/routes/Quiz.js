@@ -9,10 +9,12 @@ import Graph from "parts/Graph";
 var answerData = [];
 
 export default function Quiz(props) {
+  // set up state data
   const [quizData, setQuizData] = useState(null);
   const [done, setDone] = useState({is: false, x: 0, y: 0});
   const { id } = useParams();
-  
+
+  // fetch the data from the server when the component is loaded
   useEffect(() => {
     if (id)
       fetch("https://api.meta1203.com/quiz/" + id).then(r => r.json()).then(d => {
@@ -27,6 +29,7 @@ export default function Quiz(props) {
       });
   }, [id]);
 
+  // function to call when user clicks submit
   function tabulate() {
     // find the upper & lower bounds to the question values
     const [minX, maxX, minY, maxY] = quizData.questions.reduce((col, q) => {
@@ -39,28 +42,34 @@ export default function Quiz(props) {
       }
       return [col[0] + lx, col[1] + ux, col[2] + ly, col[3] + uy];
     }, [0,0,0,0]);
-    console.log([minX, maxX, minY, maxY]);
+    // console.log([minX, maxX, minY, maxY]);
+
+    // scale the graph according to the max & min values
     const xScale = 200 / (maxX - minX);
     const yScale = 200 / (maxY - minY);
     let x = 0;
+    // total all the answer values
     let y = 0;
     for (const a of answerData) {
       x = x + a[0];
       y = y + a[1];
     }
     console.log(`X: ${x}, Y: ${y}`);
+    // normalize x & y values to the graph
     x = (x - minX) * xScale - 100;
     y = (y - minY) * yScale - 100;
-    console.log("Output:");
-    console.log([x, y, xScale, yScale]);
+    // console.log(`Final X: ${x}, Final Y: ${y}, X Scale: ${xScale}, Y Scale: ${yScale}`);
     setDone({is: true, x, y});
   }
-  
+
+  // show an error message if there's no id
   if (!id) return (<h2>Oops, looks like you're in the wrong spot. Why not try again?</h2>);
+  // show loading screen if we're not done loading yet
   if (!quizData) return (<h2>Loading, please wait...</h2>);
+  // render the graph if already tabluated
   if (done.is) {
-    const width = Math.round(document.getElementById("root-container").clientWidth * 0.85);
-    const height = Math.round(document.getElementById("root-container").clientHeight * 0.85);
+    const width = Math.round(document.getElementById("root-container").clientWidth * 0.9);
+    const height = Math.round(document.getElementById("root-container").clientHeight * 0.9);
     const size = width > height ? height : width;
     return (
       <Row>
@@ -77,6 +86,7 @@ export default function Quiz(props) {
       </Row>
     );
   }
+  // render the quiz if not already tabluated
   return (
     <>
       <Row>
